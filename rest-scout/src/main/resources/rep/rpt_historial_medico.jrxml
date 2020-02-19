@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e6d97a17-4fc8-4685-be1a-d1a9c6e6652a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SQL Medico"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="pi_id_paciente" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[{call med.[sp_rpt_historial_medico]( $P{pi_id_paciente}  )}]]>
+	</queryString>
+	<field name="id_cita" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="id_cita"/>
+	</field>
+	<field name="id_consulta" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="id_consulta"/>
+	</field>
+	<field name="identificacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="identificacion"/>
+	</field>
+	<field name="medico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="medico"/>
+	</field>
+	<field name="pacientes" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="pacientes"/>
+	</field>
+	<field name="historial_medico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="historial_medico"/>
+	</field>
+	<field name="observacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacion"/>
+	</field>
+	<field name="especialidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="especialidad"/>
+	</field>
+	<field name="motivo_consulta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="motivo_consulta"/>
+	</field>
+	<field name="fecha_cita" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_cita"/>
+	</field>
+	<field name="horaCita" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="horaCita"/>
+	</field>
+	<field name="estado_cita" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estado_cita"/>
+	</field>
+	<field name="diagnostico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="diagnostico"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="14" width="419" height="19" forecolor="#192D54" uuid="c93ed07c-7d90-4951-bef6-f04b2d310e99"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consultorio Odotológico SALVA GI DENTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="40" width="419" height="20" forecolor="#192D54" uuid="2e471880-ff46-4c26-b07e-a670dcfdeba4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Century Gothic" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Historial Médico de Paciente]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="329" y="10" width="90" height="20" forecolor="#192D54" uuid="b39794ab-707b-458d-aec1-555e5def39dd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="10" width="70" height="20" forecolor="#192D54" uuid="ca6b1304-b374-462f-abc1-738c7ffdad1c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="109" y="10" width="201" height="20" uuid="db01f041-b53c-4bb9-885a-e481a5eaf024">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pacientes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="10" width="100" height="20" uuid="b9e49589-2115-45e8-bee0-dc485ed0a019"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="40" width="70" height="20" forecolor="#192D54" uuid="940e8526-b256-4e51-b273-e5fe754a7e89"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Historial]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="40" width="100" height="20" uuid="6baf5f05-09d1-4bae-9e40-8a69bc98ffab"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{historial_medico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="190" y="0" width="120" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="2d25c855-89cf-4456-b15b-42e820882d4f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo Consulta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="124" y="0" width="66" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="42bff209-efc6-4dca-8d39-1673b413e2c1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2587c77-d746-4430-ab5a-1bd56eb2f81d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="0" width="120" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="1b279f58-7984-422d-837b-a64f9901798a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf5150e2-82c6-4b43-a05a-5878e9b1100b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Medico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="460" y="0" width="90" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="e649faba-00a8-478d-872b-28e8818c1783">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="0" width="60" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="9622c555-7e5e-4203-a6df-b892f2cb120c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="90" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="f5e2db06-6056-405a-9a43-d69a225238d4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="0" width="120" height="20" uuid="352f1405-9121-4985-9d2b-4d89e6e55613">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b266837e-9b28-44ad-9e7e-9b90cf140ce8"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="0" width="66" height="20" uuid="b2fb9a8a-15fa-48ee-a7c7-607f52f04206">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5198dc7-5971-4f07-aba1-fbe2e16e86ba"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaCita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="0" width="120" height="20" uuid="1cb03093-f5c6-43d0-885e-1150159c292e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="127e5c74-ea49-4396-9805-b095be4e8a20"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_consulta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="60" height="20" uuid="8a1c4204-b0d5-42fb-8de3-b82eb08dae70">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="da50f6df-64dd-4ae7-ad6a-541e80b01373"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_cita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="462" y="0" width="90" height="20" uuid="1421201b-d198-473b-8847-8aa6b29af086">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1ac4174-55ea-413e-9d17-ee511aa93b58"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estado_cita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="90" height="20" uuid="25ddf165-80aa-4177-b89f-94f368c6a521">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3c488ab-3db0-4a32-a3d7-eb4dddb532ab"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diagnostico}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="25">
+			<subreport>
+				<reportElement x="0" y="0" width="552" height="20" uuid="8b18995e-1264-47b3-87e0-9b08412234f2"/>
+				<subreportParameter name="pi_id_consulta">
+					<subreportParameterExpression><![CDATA[$F{id_consulta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["src/main/resources/rep/detalleConsulta.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
