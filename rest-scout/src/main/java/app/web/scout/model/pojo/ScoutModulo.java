@@ -39,6 +39,8 @@ public class ScoutModulo  {
 	@Getter @Setter private Boolean aprobado;
 
 	@Getter @Setter private String estado;
+	
+	@Getter @Setter private String observacion;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_entrega")
@@ -74,5 +76,8 @@ public class ScoutModulo  {
 	void preInsert() {
 	   if (this.estado == null)
 	       this.estado = "A";
+	   
+	   if (this.fechaEntrega == null)
+	       this.fechaEntrega = new Date();
 	}
 }

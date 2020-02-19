@@ -25,8 +25,14 @@ public class Documento  {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_documento")
 	@Getter @Setter private Integer id;
+	
+	@Getter @Setter private String titulo;
 
 	@Getter @Setter private String descripcion;
+	
+	@Lob
+	@Column(name="ruta_archivo")
+	@Getter @Setter private String rutaArchivo;
 
 	@Getter @Setter private String estado;
 
