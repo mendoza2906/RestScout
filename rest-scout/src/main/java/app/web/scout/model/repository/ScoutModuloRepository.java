@@ -7,5 +7,5 @@ import app.web.scout.model.pojo.ScoutModulo;
 
 @Repository
 public interface ScoutModuloRepository  extends JpaRepository<ScoutModulo, Integer>{
-
+	ScoutModulo findByIdModuloAndIdScout(Integer idModulo, Integer idScout);
 }

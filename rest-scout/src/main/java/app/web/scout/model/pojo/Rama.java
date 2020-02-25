@@ -24,6 +24,8 @@ public class Rama  {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_rama")
 	@Getter @Setter private Integer id;
+	
+	@Getter @Setter private String codigo;
 
 	@Getter @Setter private String descripcion;
 
@@ -45,8 +47,11 @@ public class Rama  {
 
 	@Getter @Setter private String nombre;
 
-	@Column(name="num_integrantes")
-	@Getter @Setter private Integer numIntegrantes;
+	@Column(name="num_integrantes_min")
+	@Getter @Setter private Integer numIntegrantesMin;
+	
+	@Column(name="num_integrantes_max")
+	@Getter @Setter private Integer numIntegrantesMax;
 
 	@Getter @Setter private String oracion;
 

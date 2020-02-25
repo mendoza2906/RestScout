@@ -44,6 +44,7 @@ public class Comisionado  {
 //	@Column(name="fecha_ingreso")
 //	@Getter @Setter private Date fechaIngreso;
 
+	@Lob
 	@Getter @Setter private String imagen;
 
 	@Version

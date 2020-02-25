@@ -30,7 +30,7 @@ public class GrupoRama  {
 	@Getter @Setter private Integer id;
 	
 	@Column(name="id_grupo")
-	@Getter @Setter private Integer iGrupo;
+	@Getter @Setter private Integer idGrupo;
 	
 	@Column(name="id_rama")
 	@Getter @Setter private Integer idRama;

@@ -11,33 +11,21 @@ import app.web.scout.model.pojo.Comisionado;
 @Repository
 public interface ComisionadoRepository extends JpaRepository<Comisionado, Integer>{
 
-//	@Query(value=" select p.id as idPersona,m.id as idMedico,concat(p.nombres,' ',p.apellidos) as nombres "+
-//			" from Medico m " + 
-//			" inner join Persona p on p.id = m.idPersona " + 
-//			" where m.idEspecialidad =(?1)")
-//	List<CustObjtListarMedicos> listarMedicos(Integer idEspecialidad);
-//	interface CustObjtListarMedicos{
-//		Integer getIdPersona();
-//		String getIdMedico();
-//		String getNombres();
-//
-//	}
-//
-//	@Query(value=" select p.id as idPersona, m.id as idMedico," +
-//			" p.identificacion as identificacion, concat(p.apellidos,' ',p.nombres) as nombresCompletos," + 
-//			" e.descripcion as especialidad,p.direccion as direccion,p.celular as celular from Medico m " + 
-//			" inner join Persona p on p.id = m.idPersona " + 
-//			" inner join Especialidad e on e.id = m.idEspecialidad " + 
-//			" where m.idEspecialidad =(?1)")
-//	List<ListPacientes> listadoMedicos(Integer idEspecialidad);
-//	interface ListPacientes{ 
-//		Integer getIdPersona(); 
-//		Integer getIdMedico(); 
-//		String getIdentificacion(); 
-//		String getNombresCompletos(); 
-//		String getEspecialidad(); 
-//		String getDireccion();
-//		String getCelular();
-//	}
+	@Query(value=" select s.id as idScout, s.idTipoScout as idTipoScout, s.idGrupoRama as idGrupoRama," +
+			" s.identificacion as identificacion, concat(s.apellidos,' ',s.nombres) as nombresCompletos," + 
+			" ts.nombre as tipoScout ,s.direccion as direccion,s.celular as celular from  Scout s " + 
+			" inner join Comisionado c on s.id = c.idScout " + 
+			" inner join TipoScout ts on ts.id = s.idTipoScout ")
+	List<ListComisionados> listadoComisionados();
+	interface ListComisionados{ 
+		Integer getIdScout();
+		Integer getIdTipoScout();
+		Integer getIdGrupoRama();
+		String getIdentificacion(); 
+		String getNombresCompletos(); 
+		String getTipoScout(); 
+		String getDireccion();
+		String getCelular();
+	}
 
 }

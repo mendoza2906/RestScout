@@ -38,6 +38,8 @@ public class Scout  {
 	@Getter @Setter private String apellidos;
 
 	@Getter @Setter private String celular;
+	
+	@Getter @Setter private String correo;
 
 	@Getter @Setter private String direccion;
 
@@ -57,8 +59,6 @@ public class Scout  {
 
 	@Getter @Setter private String nombres;
 
-	@Getter @Setter private String telefono;
-
 	@Version
 	@Getter @Setter private Integer version;
 
@@ -69,6 +69,7 @@ public class Scout  {
 
 	//bi-directional many-to-one association to DetalleAsistencia
 	@OneToMany(mappedBy="scout", cascade=CascadeType.ALL)
+	@JsonIgnore
 	@Getter @Setter private List<DetalleAsistencia> detalleAsistencias;
 
 	//bi-directional many-to-one association to TipoScout
@@ -85,6 +86,7 @@ public class Scout  {
 
 	//bi-directional many-to-one association to ScoutModulo
 	@OneToMany(mappedBy="scout", cascade=CascadeType.ALL)
+	@JsonIgnore
 	@Getter @Setter private List<ScoutModulo> scoutModulos;
 
 	//bi-directional many-to-one association to Usuario

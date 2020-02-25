@@ -28,6 +28,8 @@ public class Grupo  {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_grupo")
 	@Getter @Setter private Integer id;
+	
+	@Getter @Setter private String codigo;
 
 	@Column(name="dia_actividades")
 	@Getter @Setter private String diaActividades;
@@ -50,6 +52,8 @@ public class Grupo  {
 	@Getter @Setter private Time horaActivo;
 
 	@Getter @Setter private String nombre;
+	
+	@Getter @Setter private Integer orden;
 
 	@Getter @Setter private String panoleta;
 

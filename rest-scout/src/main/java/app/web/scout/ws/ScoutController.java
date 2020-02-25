@@ -22,12 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.web.scout.model.pojo.Asistencia;
+import app.web.scout.model.pojo.Comisionado;
+import app.web.scout.model.pojo.Documento;
+import app.web.scout.model.pojo.Scout;
 import app.web.scout.model.pojo.Usuario;
+import app.web.scout.model.repository.ActividadRepository;
+import app.web.scout.model.repository.AsistenciaRepository;
 import app.web.scout.model.repository.ComisionadoRepository;
+import app.web.scout.model.repository.GrupoRepository;
 import app.web.scout.model.repository.PerfilRepository;
 import app.web.scout.model.repository.ScoutRepository;
+import app.web.scout.model.repository.TipoScoutRepository;
 import app.web.scout.model.repository.UsuarioRepository;
-import app.web.scout.model.service.ConsultorioService;
+import app.web.scout.model.service.ScoutService;
 import app.web.scout.model.service.ReportService;
 import app.web.scout.model.service.SecurityService;
 import lombok.Getter;
@@ -38,110 +46,185 @@ import lombok.Getter;
 @CrossOrigin
 public class ScoutController {
 
-	@Autowired private ScoutRepository personaRepository;
+	@Autowired private ScoutRepository scoutRepository;
 	@Autowired private UsuarioRepository usuarioRepository;
-	@Autowired private ComisionadoRepository medicoRepository;
-//	@Autowired private PacienteRepository pacienteRepository;
+	@Autowired private GrupoRepository grupoRepository;
+	@Autowired private ComisionadoRepository comisionadoRepository;
+	@Autowired private TipoScoutRepository tipoScoutRepository;
 	@Autowired private PerfilRepository perfilRepository;
 	@Autowired private SecurityService securityService;
-	@Autowired private ConsultorioService consultorioService;
+	@Autowired private ActividadRepository actividadRepository;
+	@Autowired private AsistenciaRepository asistenciaRepository;
+	@Autowired private ScoutService scoutService;
 	@Autowired private ReportService reportService;
 
 	//****************** SERVICIOS PARA PACIENTES************************//
 
-//	//lista los pacientes
-//	@RequestMapping(value = "/listadoPacientes", method = RequestMethod.GET)
-//	public ResponseEntity<?> listadoPacientes(@RequestHeader(value = "Authorization") String Authorization ){
-//		if (!securityService.isTokenValido(Authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		return ResponseEntity.ok(pacienteRepository.listadoPacientes());
-//	}
-//
-//	//lista los pacientes
-//	@RequestMapping(value = "/listarPerfiles", method = RequestMethod.GET)
-//	public ResponseEntity<?> listarPerfiles(@RequestHeader(value = "Authorization") String Authorization ){
-//		if (!securityService.isTokenValido(Authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		return ResponseEntity.ok(perfilRepository.listarPerfiles());
-//	}
-//
-//	//recupera el ultimo numero de paciente 
-//	@RequestMapping(value="/recuperarUltimoPaciente", method=RequestMethod.GET)
-//	public ResponseEntity<?> recuperarUltimoPaciente(@RequestHeader(value="Authorization") String authorization) {
-//		if (!securityService.isTokenValido(authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		return ResponseEntity.ok(pacienteRepository.ultimoPaciente());	
-//	}
-//
-//	//recupera persona por cedula
-//	@RequestMapping(value = "/recuperarPorCedula/{identificacion}", method = RequestMethod.GET)
-//	public ResponseEntity<?> recuperarPorCedula(@RequestHeader(value = "Authorization") String Authorization,
-//			@PathVariable("identificacion") String identificacion) {
-//		if (!securityService.isTokenValido(Authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		Persona _persona;
-//		_persona = personaRepository.findByIdentificacion(identificacion);
-//		if (_persona!=null) {
-//			if(_persona.getMedico()!=null){
-//				Medico medico = new Medico();
-//				BeanUtils.copyProperties(_persona.getMedico(), medico, "citas");
-//				_persona.setMedico(medico);
-//			}
-//			if(_persona.getPaciente()!=null){
-//				Paciente paciente = new Paciente();
-//				BeanUtils.copyProperties(_persona.getPaciente(),paciente, "citas");
-//				_persona.setPaciente(paciente);
-//			}
-//			return ResponseEntity.ok(_persona);
-//		} else {
-//			return ResponseEntity.ok().build();
-//		}
-//	}
-//
-//	//Graba una persona-Medico-Paciente-Usuario
-//	@RequestMapping(value = "/grabarPersona", method = RequestMethod.POST)
-//	public ResponseEntity<?> grabarPersona(@RequestHeader(value = "Authorization") String Authorization, 	
-//			@RequestBody Persona persona) {
-//		if (!securityService.isTokenValido(Authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		consultorioService.grabarPersona(persona);
-//		return ResponseEntity.ok().build();
-//	}
-//	//****************** SERVICIOS PARA PACIENTES************************//
-//
-//
-//	//****************** SERVICIOS PARA MEDICOS************************//
-//	//lista medicos
-//	@RequestMapping(value = "/listadoMedicos/{idEspecialidad}", method = RequestMethod.GET)
-//	public ResponseEntity<?> listadoMedicos(@RequestHeader(value = "Authorization") String Authorization,
-//			@PathVariable("idEspecialidad") Integer idEspecialidad) {
-//		if (!securityService.isTokenValido(Authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		return ResponseEntity.ok(medicoRepository.listadoMedicos(idEspecialidad));
-//
-//	}
-//
-//	// busca un usuario por nombre usuario
-//	@RequestMapping(value = "/buscarUsuario/{usuario}", method = RequestMethod.GET)
-//	public ResponseEntity<?> buscarUsuario(@RequestHeader(value = "Authorization") String authorization,
-//			@PathVariable("usuario") String usuario) {
-//		if (!securityService.isTokenValido(authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		Usuario _usuario;
-//		_usuario = usuarioRepository.findByUsuario(usuario);
-//		if (_usuario!=null) {
-//			return ResponseEntity.ok(_usuario);
-//		} else {
-//			return ResponseEntity.ok().build();
-//		}
-//	}
+	
+	//lista tipos de scouts
+	@RequestMapping(value = "/listarTiposScouts", method = RequestMethod.GET)
+	public ResponseEntity<?> listarTiposScouts(@RequestHeader(value = "Authorization") String Authorization) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(tipoScoutRepository.listarTiposScouts());
+	}
+	
+	//lista scouts
+	@RequestMapping(value = "/listadoScouts", method = RequestMethod.GET)
+	public ResponseEntity<?> listadoScouts(@RequestHeader(value = "Authorization") String Authorization) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(scoutRepository.listadoScouts());
+	}
+	
+	//lista scouts
+	@RequestMapping(value = "/listadoComisionados", method = RequestMethod.GET)
+	public ResponseEntity<?> listadoComisionados(@RequestHeader(value = "Authorization") String Authorization) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(comisionadoRepository.listadoComisionados());
+	}
+
+
+	// servicio que devuelve un scout
+	@RequestMapping(value = "/recuperarScoutId/{idScout}", method = RequestMethod.GET)
+	public ResponseEntity<?> recuperarScoutId(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("idScout") Integer idScout) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Scout _scout;
+		if (scoutRepository.findById(idScout).isPresent()) {
+			_scout = scoutRepository.findById(idScout).get();
+			return ResponseEntity.ok(_scout);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	//recupera id combos
+	@RequestMapping(value = "/recuperarCombosGrupoRama/{idGrupoRama}", method = RequestMethod.GET)
+	public ResponseEntity<?> recuperarCombosGrupoRama(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("idGrupoRama") Integer idGrupoRama) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(grupoRepository.recuperarCombosGrupoRama(idGrupoRama));
+	}
+	
+	//lista los pacientes
+	@RequestMapping(value = "/listarPerfiles", method = RequestMethod.GET)
+	public ResponseEntity<?> listarPerfiles(@RequestHeader(value = "Authorization") String Authorization ){
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(perfilRepository.listarPerfiles());
+	}
+	
+	//recupera persona por cedula
+	@RequestMapping(value = "/recuperarPorCedula/{identificacion}", method = RequestMethod.GET)
+	public ResponseEntity<?> recuperarPorCedula(@RequestHeader(value = "Authorization") String Authorization,
+			@PathVariable("identificacion") String identificacion) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Scout _persona;
+		_persona = scoutRepository.findByIdentificacion(identificacion);
+		if (_persona!=null) {
+			return ResponseEntity.ok(_persona);
+		} else {
+			return ResponseEntity.ok().build();
+		}
+	}
+
+	// busca un usuario por nombre usuario
+	@RequestMapping(value = "/buscarUsuario/{usuario}", method = RequestMethod.GET)
+	public ResponseEntity<?> buscarUsuario(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("usuario") String usuario) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Usuario _usuario;
+		_usuario = usuarioRepository.findByUsuario(usuario);
+		if (_usuario!=null) {
+			return ResponseEntity.ok(_usuario);
+		} else {
+			return ResponseEntity.ok().build();
+		}
+	}
+	
+	// servicio para grabar Scouts 
+	@RequestMapping(value = "/grabarScout", method = RequestMethod.POST)
+	public ResponseEntity<?> grabarScout(@RequestHeader(value = "Authorization") String Authorization,
+			@RequestBody Scout scout) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		scoutService.grabarScout(scout);
+		return ResponseEntity.ok().build();
+	}
+
+//***************************PARA PANTALLA ASISTENCIA**************************************/////
+	
+	// servicio que devuelve el objeto asistencia
+	@RequestMapping(value = "/recuperarAsistenciaId/{idAsistencia}", method = RequestMethod.GET)
+	public ResponseEntity<?> listarConsultaId(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("idAsistencia") Integer idAsistencia) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Asistencia _asistencia;
+		if (asistenciaRepository.findById(idAsistencia).isPresent()) {
+			_asistencia = asistenciaRepository.findById(idAsistencia).get();
+			return ResponseEntity.ok(_asistencia);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	//lista las actividades
+	@RequestMapping(value = "/listarActividades", method = RequestMethod.GET)
+	public ResponseEntity<?> listarActividades(@RequestHeader(value = "Authorization") String authorization) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(actividadRepository.listarActividades());
+	}
+	
+	//lista las asistencias
+	@RequestMapping(value = "/listarAsistencias", method = RequestMethod.GET)
+	public ResponseEntity<?> listarAsistencias(@RequestHeader(value = "Authorization") String authorization) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(actividadRepository.listarAsistencias());
+	}
+	
+	//recupera combos scout
+	@RequestMapping(value = "/recuperarCombosScouts/{idScout}", method = RequestMethod.GET)
+	public ResponseEntity<?> recuperarCombosScouts(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("idScout") Integer idScout) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(grupoRepository.recuperarCombosScouts(idScout));
+	}
+	
+	// servicio para grabar Scouts 
+	@RequestMapping(value = "/grabarAsistencia", method = RequestMethod.POST)
+	public ResponseEntity<?> grabarAsistencia(@RequestHeader(value = "Authorization") String Authorization,
+			@RequestBody Asistencia asistencia) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		scoutService.grabarAsistencia(asistencia);
+		return ResponseEntity.ok().build();
+	}
+	
+	
+//***************************PARA PANTALLA ASISTENCIA**************************************/////
 //
 //	private static final String PATH_REPORT = File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"rep";
 //

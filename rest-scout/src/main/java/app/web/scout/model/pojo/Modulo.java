@@ -55,6 +55,7 @@ public class Modulo  {
 
 	//bi-directional many-to-one association to ScoutModulo
 	@OneToMany(mappedBy="modulo", cascade=CascadeType.ALL)
+	@JsonIgnore
 	@Getter @Setter private List<ScoutModulo> scoutModulos;
 
 	@PrePersist

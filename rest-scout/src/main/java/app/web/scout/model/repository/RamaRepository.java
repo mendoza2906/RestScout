@@ -22,4 +22,15 @@ public interface RamaRepository extends JpaRepository<Rama, Integer> {
 //		String getHora();
 //		Integer getOrden();	
 //	}
+	
+	@Query(value="select r.id as id, r.codigo as codigo, r.nombre as nombre, r.estado as estado" +
+			" from Rama r ")
+	List<CustObjRama> listarRamas();
+	interface CustObjRama{
+		Integer getId();
+		String getCodigo();
+		String getNombre();
+		String getEstado();
+	}	
+	
 }
