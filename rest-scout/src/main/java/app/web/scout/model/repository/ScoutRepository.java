@@ -18,7 +18,7 @@ public interface ScoutRepository extends JpaRepository<Scout,Integer> {
 			" s.identificacion as identificacion, concat(s.apellidos,' ',s.nombres) as nombresCompletos," + 
 			" ts.nombre as tipoScout, s.direccion as direccion,s.celular as celular from  Scout s " + 
 			" inner join TipoScout ts on ts.id = s.idTipoScout " +
-			" where s.id not in (select c.idScout from Comisionado c)")
+			" where s.id not in (select c.idScout from Comisionado c) order by s.nombres, s.apellidos asc ")
 	List<ListadoScouts> listadoScouts();
 	interface ListadoScouts{ 
 		Integer getIdScout();
@@ -73,7 +73,7 @@ public interface ScoutRepository extends JpaRepository<Scout,Integer> {
 	@Query(value=" SELECT s.id as idScout, r.nombre AS rama ,i.nombre AS insignia, i.imagen as imagen,ts.nombre as tipoScout,g.nombre AS grupo,  " + 
 			"	CONCAT(s.nombres,' ', s.apellidos) AS nombres, (SELECT COUNT(m1.id) FROM Modulo m1 " + 
 			"	INNER JOIN ScoutModulo sm ON m1.id= sm.idModulo WHERE sm.idScout= (?1)  AND sm.aprobado=1 AND m1.idInsignia= i.id)AS contCumplidos," +
-			"	(SELECT count(m1.id) FROM Modulo m1 WHERE  m1.idInsignia= m.idInsignia) AS contTotales" + 
+			"	(SELECT count(m1.id) FROM Modulo m1 WHERE  m1.idInsignia= m.idInsignia) AS contTotales, i.urlFoto as urlFoto" + 
 			"	FROM Rama r INNER JOIN RamasInsignia ri ON ri.idRama = r.id " + 
 			"	INNER JOIN Insignia i ON i.id = ri.idInsignia " + 
 			"	INNER JOIN Modulo m ON m.idInsignia = i.id " + 
@@ -99,10 +99,11 @@ public interface ScoutRepository extends JpaRepository<Scout,Integer> {
 		String getNombres(); 
 		Integer getContCumplidos(); 
 		Integer getContTotales(); 
+		String getUrlFoto(); 
 	}
 
 	@Query(value=" SELECT distinct s.id as idScout,i.id as idInsignia,i.nombre AS insignia, i.imagen as imagen,i.descripcion AS descripcion, m.id as idModulo ," + 
-			"	COUNT(m.id)AS contCumplidos,(SELECT count(m1.id) FROM Modulo m1 WHERE  m1.idInsignia= m.idInsignia) AS contTotales " +
+			"	COUNT(m.id)AS contCumplidos,(SELECT count(m1.id) FROM Modulo m1 WHERE  m1.idInsignia= m.idInsignia) AS contTotales,i.urlFoto as urlFoto " +
 			"	FROM Insignia i " + 
 			"	INNER JOIN Modulo m ON m.idInsignia = i.id " + 
 			"	INNER JOIN ScoutModulo sm ON m.id= sm.idModulo " + 
@@ -120,6 +121,7 @@ public interface ScoutRepository extends JpaRepository<Scout,Integer> {
 		Integer getIdModulo(); 
 		Integer getContCumplidos(); 
 		Integer getContTotales(); 
+		String getUrlFoto(); 
 	}
 	
 	@Query(value=" SELECT distinct s.id as idScout,i.id as idInsignia,sm.id as idScoutModulos, m.id as idModulo, m.nombre as modulo," + 

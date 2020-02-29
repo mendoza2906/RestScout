@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_lista_actividades" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59c4e885-38a2-40af-abdb-8a59f2a75b83">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="pi_id_insignia" class="java.lang.Integer"/>
+	<parameter name="rutaImagen" class="java.lang.String"/>
+	<parameter name="rutaLogo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[{call listado_proyectos(  $P{pi_id_insignia}  )}]]>
+	</queryString>
+	<field name="id_insignia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_insignia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="insignia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="insignia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="id_modulo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_modulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="modulo"/>
+	</field>
+	<field name="modulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="modulo"/>
+	</field>
+	<field name="desMod" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="desMod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="modulo"/>
+	</field>
+	<field name="rama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="rama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rama"/>
+	</field>
+	<field name="complieron" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="complieron"/>
+	</field>
+	<field name="totales" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="totales"/>
+	</field>
+	<variable name="id_insignia_SUM" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{id_insignia}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<image>
+				<reportElement x="80" y="10" width="50" height="50" uuid="e824dd20-4a36-420f-a104-f920293adff4"/>
+				<imageExpression><![CDATA[$P{rutaImagen}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="430" y="10" width="50" height="50" uuid="4cb7a82b-6ef0-43d1-9d17-40d0c2bba156"/>
+				<imageExpression><![CDATA[$P{rutaLogo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="130" y="40" width="290" height="18" uuid="2bab8ce5-99fb-44fb-bdbc-67dc53be519e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte "Listado de Proyectos por Insignia"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="20" width="290" height="18" uuid="1e306084-08b1-4a25-81c6-d17b79d29c41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distrito Scout "Santa Elena"]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="69">
+			<staticText>
+				<reportElement x="270" y="0" width="90" height="20" forecolor="#192D54" uuid="4163fbfd-e38e-4718-96ea-a354090b8574"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Insignia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="0" width="69" height="20" forecolor="#192D54" uuid="3b596484-fab3-4c67-8bad-dae32ba6b1d1"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rama:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="30" width="90" height="20" forecolor="#192D54" uuid="00f8c483-3344-42b2-b50d-d2db152f4903"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Century Gothic" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Insignia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="0" width="180" height="20" uuid="affd96ab-3da5-48cb-b3b8-cdd627c366e5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{insignia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="30" width="110" height="20" uuid="160a1551-b9eb-401f-b05a-c636ba8a3f4a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="170" height="20" uuid="c9694bcb-ef60-46f3-b8ff-fe949b259f20">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{rama}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="202" y="0" width="180" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="5d3e3649-d5c7-4b99-a50e-128b51530025">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="16" y="0" width="186" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="683c93e5-81a8-4400-ab3b-10c45c7792bc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf5150e2-82c6-4b43-a05a-5878e9b1100b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Módulo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="16" y="-1" width="186" height="21" uuid="5d2e860d-fba5-4b7a-96dc-d1b40cf550f5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="41e3e367-6082-43bf-9a19-e182fce6e147"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{modulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="202" y="-1" width="180" height="21" uuid="4248fbce-2813-44c0-8186-c6f552498774">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="12b67fde-00ab-408e-9220-6d3e6a87d68a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{desMod}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="23">
+			<subreport isUsingCache="false">
+				<reportElement x="16" y="0" width="480" height="20" uuid="08b628ea-06c8-483e-afcf-1cbcc97608e7"/>
+				<subreportParameter name="pi_id_modulo">
+					<subreportParameterExpression><![CDATA[$F{id_modulo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["src/main/resources/rep/rpt_listado_proyectos2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="50"/>
+	</summary>
+</jasperReport>

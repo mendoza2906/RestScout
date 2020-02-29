@@ -32,9 +32,8 @@ public class Insignia  {
 	
 	@Getter @Setter private String estado;
 	
-//	@Temporal(TemporalType.TIMESTAMP)
-//	@Column(name="fecha_ingreso")
-//	private Date fechaIngreso;
+	@Column(name="url_foto")
+	@Getter @Setter private String urlFoto;
 
 	@Getter @Setter private String imagen;
 

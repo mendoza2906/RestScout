@@ -27,9 +27,8 @@ public class Noticia  {
 
 	@Getter @Setter private String estado;
 
-//	@Temporal(TemporalType.TIMESTAMP)
-//	@Column(name="fecha_ingreso")
-//	@Getter @Setter private Date fechaIngreso;
+	@Column(name="url_img")
+	@Getter @Setter private String urlImg;
 
 	@Version
 	@Getter @Setter private Integer version;
@@ -42,5 +41,13 @@ public class Noticia  {
 
 	@Getter @Setter private String titulo;
 
+	@PrePersist
+	void preInsert() {
+	   if (this.estado == null)
+	       this.estado = "A";
+	   
+	   if (this.fechaPublic == null)
+	       this.fechaPublic = new Date();
+	}
 
 }

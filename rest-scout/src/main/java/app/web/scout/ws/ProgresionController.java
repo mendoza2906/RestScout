@@ -1,8 +1,18 @@
 package app.web.scout.ws;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +35,10 @@ import app.web.scout.model.repository.DocumentoRepository;
 import app.web.scout.model.repository.GrupoRepository;
 import app.web.scout.model.repository.ScoutRepository;
 import app.web.scout.model.repository.TipoScoutRepository;
+import app.web.scout.model.service.ReportService;
 import app.web.scout.model.service.ScoutService;
 import app.web.scout.model.service.SecurityService;
+import lombok.Getter;
 
 
 @RestController
@@ -35,22 +47,25 @@ import app.web.scout.model.service.SecurityService;
 public class ProgresionController {
 
 	@Autowired private ScoutRepository scoutRepository;
-	@Autowired private ActividadRepository consultaRepository;
 	@Autowired private TipoScoutRepository tipoScoutRepository;
 	@Autowired private RamaRepository ramaRepository;
 	@Autowired private GrupoRepository grupoRepository;
 	@Autowired private DocumentoRepository documentoRepository;
 	@Autowired private ScoutModuloRepository scoutModuloRepository;
-	@Autowired private ComisionadoRepository medicoRepository;
-	@Autowired private AsistenciaRepository citaRepository;
 	//	@Autowired private EspecialidadRepository especialidadRepository;
 	@Autowired private ScoutService scoutService;
 	@Autowired private SecurityService securityService;
+	
+//	@Autowired private ReportService reportService;
+//
+//	@Getter private String imagen="fotoMenu.png";
+//	@Getter private String imagenLogo="florLis.png";
+//	@Getter private String rutaImagen="";
+//	@Getter private String rutaImagenLogo="";
+//	private static final String PATH_IMAGEN = "/src/main/resources/img";
 
 
 	//****************** SERVICIOS PARA CITAS************************//
-
-	
 	//recupera datos delusuario que se logea
 	@RequestMapping(value = "/recuperarDatosScout/{usuario}", method = RequestMethod.GET)
 	public ResponseEntity<?> recuperarDatosScout(@RequestHeader(value = "Authorization") String authorization,
@@ -215,51 +230,6 @@ public class ProgresionController {
 		scoutService.grabarDocumentoModulos(documento);
 		return ResponseEntity.ok().build();
 	}
-
-
-	//	//****************** SERVICIOS PARA CITAS************************//
-	//	
-	//	//****************** SERVICIOS PARA CONSULTAS************************//
-	//	//	Recuepera los datos de la cita
-	//	@RequestMapping(value = "/recuperarDatosCita/{idCita}", method = RequestMethod.GET)
-	//	public ResponseEntity<?> recuperarDatosCita(@RequestHeader(value = "Authorization") String authorization,
-	//			@PathVariable("idCita") Long idCita) {
-	//		if (!securityService.isTokenValido(authorization)) {
-	//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	//		}
-	//		return ResponseEntity.ok(citaRepository.fnRecuperarDatosCita(idCita));
-	//
-	//	}
-	//	
-	// servicio que devuelve el objeto consulta
-	//	@RequestMapping(value = "/listarConsultaId/{idConsulta}", method = RequestMethod.GET)
-	//	public ResponseEntity<?> listarConsultaId(@RequestHeader(value = "Authorization") String authorization,
-	//			@PathVariable("idConsulta") Long idConsulta) {
-	//		if (!securityService.isTokenValido(authorization)) {
-	//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	//		}
-	//		Consulta _consulta;
-	//		if (consultaRepository.findById(idConsulta).isPresent()) {
-	//			_consulta = consultaRepository.findById(idConsulta).get();
-	//			return ResponseEntity.ok(_consulta);
-	//		} else {
-	//			return ResponseEntity.notFound().build();
-	//		}
-	//	}
-	//
-
-	//	
-	//	
-	//	// servicio para grabar Consulta
-	//	@RequestMapping(value = "/grabarConsulta", method = RequestMethod.POST)
-	//	public ResponseEntity<?> grabarConsulta(@RequestHeader(value = "Authorization") String Authorization,
-	//			@RequestBody Consulta consulta) {
-	//		if (!securityService.isTokenValido(Authorization)) {
-	//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	//		}
-	//		consultorioService.grabarConsultas(consulta);
-	//		return ResponseEntity.ok().build();
-	//	}
-	//	
-	//	//****************** SERVICIOS PARA CONSULTAS************************//
+	
+	
 }

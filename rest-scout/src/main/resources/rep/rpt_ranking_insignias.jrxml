@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_ranking_insgignias" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2092c36d-d27d-4b01-b7ac-e5d63d8e4f50">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="2ed7d675-3129-45f5-bee2-cfa74283dda0">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<queryString>
+			<![CDATA[{call rankingInsignias(    )}]]>
+		</queryString>
+		<field name="id_insignia" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.label" value="id_insignia"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+		</field>
+		<field name="insignia" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="insignia"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+		</field>
+		<field name="numScouts" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.label" value="numScouts"/>
+		</field>
+	</subDataset>
+	<parameter name="rutaImagen" class="java.lang.String"/>
+	<parameter name="rutaLogo" class="java.lang.String" nestedType=""/>
+	<queryString>
+		<![CDATA[{call rankingInsignias(    )}]]>
+	</queryString>
+	<field name="id_insignia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_insignia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="insignia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="insignia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="insignia"/>
+	</field>
+	<field name="numScouts" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="numScouts"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="190" y="0" width="50" height="50" uuid="c1c97ca2-f8a2-4f8a-8e2d-7ab284c4ae78"/>
+				<imageExpression><![CDATA[$P{rutaImagen}]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="540" y="0" width="50" height="50" uuid="d98425a8-6dc2-4307-b227-7695963828f6"/>
+				<imageExpression><![CDATA[$P{rutaLogo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="240" y="30" width="290" height="18" uuid="6687b165-51c3-41cf-9f14-e5efabae412f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte "Ranking de Insignias Conseguidas"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="10" width="290" height="18" uuid="b57f01f7-4fab-4aff-ba20-3b4ed6d0fa98"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Distrito Scout "Santa Elena"]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="405" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement isPrintRepeatedValues="false" x="-10" y="10" width="590" height="360" uuid="fb337945-98d2-431b-a65a-63f3b32ed12a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Número de Scouts por Insignia"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{insignia}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{numScouts}]]></valueExpression>
+						<labelExpression><![CDATA[$F{codigo}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot labelRotation="90.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="90.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<componentElement>
+				<reportElement x="610" y="0" width="180" height="60" uuid="2bc9bc7a-b424-4094-b671-1ab1dd874e1b">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="004ef01c-0ab1-4489-a28f-e9d0b331495a">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="140" uuid="d3def1d8-910c-461b-a498-b8c8b1cb8737">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="140" height="30" uuid="6ddac9ed-2f87-4ae4-b0f3-c114ec0c2c3e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[Insignia]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="140" height="30" uuid="9bb0ac31-073c-404f-9f55-e761cc2a4e44"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{insignia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="971465f4-af21-4fce-aee9-9d585444b22a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="30" uuid="ea7bd7b6-96a2-4ce7-8ea4-fff6514b0371"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[N.# Scouts]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="b8025520-94a3-4d72-8a78-afe7d9b3ee1a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numScouts}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

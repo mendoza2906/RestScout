@@ -15,7 +15,7 @@ public interface ComisionadoRepository extends JpaRepository<Comisionado, Intege
 			" s.identificacion as identificacion, concat(s.apellidos,' ',s.nombres) as nombresCompletos," + 
 			" ts.nombre as tipoScout ,s.direccion as direccion,s.celular as celular from  Scout s " + 
 			" inner join Comisionado c on s.id = c.idScout " + 
-			" inner join TipoScout ts on ts.id = s.idTipoScout ")
+			" inner join TipoScout ts on ts.id = s.idTipoScout order by s.nombres, s.apellidos asc  ")
 	List<ListComisionados> listadoComisionados();
 	interface ListComisionados{ 
 		Integer getIdScout();

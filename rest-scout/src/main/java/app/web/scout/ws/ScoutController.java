@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bouncycastle.jcajce.provider.asymmetric.dsa.DSASigner.noneDSA;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -25,12 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 import app.web.scout.model.pojo.Asistencia;
 import app.web.scout.model.pojo.Comisionado;
 import app.web.scout.model.pojo.Documento;
+import app.web.scout.model.pojo.Noticia;
 import app.web.scout.model.pojo.Scout;
 import app.web.scout.model.pojo.Usuario;
 import app.web.scout.model.repository.ActividadRepository;
 import app.web.scout.model.repository.AsistenciaRepository;
 import app.web.scout.model.repository.ComisionadoRepository;
 import app.web.scout.model.repository.GrupoRepository;
+import app.web.scout.model.repository.InsigniaRepository;
+import app.web.scout.model.repository.NoticiaRepository;
 import app.web.scout.model.repository.PerfilRepository;
 import app.web.scout.model.repository.ScoutRepository;
 import app.web.scout.model.repository.TipoScoutRepository;
@@ -51,16 +55,23 @@ public class ScoutController {
 	@Autowired private GrupoRepository grupoRepository;
 	@Autowired private ComisionadoRepository comisionadoRepository;
 	@Autowired private TipoScoutRepository tipoScoutRepository;
+	@Autowired private InsigniaRepository insigniaRepository;
 	@Autowired private PerfilRepository perfilRepository;
 	@Autowired private SecurityService securityService;
 	@Autowired private ActividadRepository actividadRepository;
 	@Autowired private AsistenciaRepository asistenciaRepository;
+	@Autowired private NoticiaRepository noticiaRepository;
 	@Autowired private ScoutService scoutService;
 	@Autowired private ReportService reportService;
+	@Getter private String imagen="fotoMenu.png";
+	@Getter private String imagenLogo="florLis.png";
+	@Getter private String rutaImagen="";
+	@Getter private String rutaImagenLogo="";
+	private static final String PATH_IMAGEN = "/src/main/resources/img";
 
 	//****************** SERVICIOS PARA PACIENTES************************//
 
-	
+
 	//lista tipos de scouts
 	@RequestMapping(value = "/listarTiposScouts", method = RequestMethod.GET)
 	public ResponseEntity<?> listarTiposScouts(@RequestHeader(value = "Authorization") String Authorization) {
@@ -70,6 +81,15 @@ public class ScoutController {
 		return ResponseEntity.ok(tipoScoutRepository.listarTiposScouts());
 	}
 	
+	//listas insignias
+	@RequestMapping(value = "/listarInsignias", method = RequestMethod.GET)
+	public ResponseEntity<?> listarInsignias(@RequestHeader(value = "Authorization") String Authorization) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(insigniaRepository.listarInsignias());
+	}
+
 	//lista scouts
 	@RequestMapping(value = "/listadoScouts", method = RequestMethod.GET)
 	public ResponseEntity<?> listadoScouts(@RequestHeader(value = "Authorization") String Authorization) {
@@ -78,7 +98,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(scoutRepository.listadoScouts());
 	}
-	
+
 	//lista scouts
 	@RequestMapping(value = "/listadoComisionados", method = RequestMethod.GET)
 	public ResponseEntity<?> listadoComisionados(@RequestHeader(value = "Authorization") String Authorization) {
@@ -104,7 +124,7 @@ public class ScoutController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	//recupera id combos
 	@RequestMapping(value = "/recuperarCombosGrupoRama/{idGrupoRama}", method = RequestMethod.GET)
 	public ResponseEntity<?> recuperarCombosGrupoRama(@RequestHeader(value = "Authorization") String authorization,
@@ -114,7 +134,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(grupoRepository.recuperarCombosGrupoRama(idGrupoRama));
 	}
-	
+
 	//lista los pacientes
 	@RequestMapping(value = "/listarPerfiles", method = RequestMethod.GET)
 	public ResponseEntity<?> listarPerfiles(@RequestHeader(value = "Authorization") String Authorization ){
@@ -123,7 +143,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(perfilRepository.listarPerfiles());
 	}
-	
+
 	//recupera persona por cedula
 	@RequestMapping(value = "/recuperarPorCedula/{identificacion}", method = RequestMethod.GET)
 	public ResponseEntity<?> recuperarPorCedula(@RequestHeader(value = "Authorization") String Authorization,
@@ -155,7 +175,7 @@ public class ScoutController {
 			return ResponseEntity.ok().build();
 		}
 	}
-	
+
 	// servicio para grabar Scouts 
 	@RequestMapping(value = "/grabarScout", method = RequestMethod.POST)
 	public ResponseEntity<?> grabarScout(@RequestHeader(value = "Authorization") String Authorization,
@@ -167,8 +187,8 @@ public class ScoutController {
 		return ResponseEntity.ok().build();
 	}
 
-//***************************PARA PANTALLA ASISTENCIA**************************************/////
-	
+	//***************************PARA PANTALLA ASISTENCIA**************************************/////
+
 	// servicio que devuelve el objeto asistencia
 	@RequestMapping(value = "/recuperarAsistenciaId/{idAsistencia}", method = RequestMethod.GET)
 	public ResponseEntity<?> listarConsultaId(@RequestHeader(value = "Authorization") String authorization,
@@ -192,7 +212,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(actividadRepository.listarActividades());
 	}
-	
+
 	//lista las asistencias
 	@RequestMapping(value = "/listarAsistencias", method = RequestMethod.GET)
 	public ResponseEntity<?> listarAsistencias(@RequestHeader(value = "Authorization") String authorization) {
@@ -201,7 +221,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(actividadRepository.listarAsistencias());
 	}
-	
+
 	//recupera combos scout
 	@RequestMapping(value = "/recuperarCombosScouts/{idScout}", method = RequestMethod.GET)
 	public ResponseEntity<?> recuperarCombosScouts(@RequestHeader(value = "Authorization") String authorization,
@@ -211,7 +231,7 @@ public class ScoutController {
 		}
 		return ResponseEntity.ok(grupoRepository.recuperarCombosScouts(idScout));
 	}
-	
+
 	// servicio para grabar Scouts 
 	@RequestMapping(value = "/grabarAsistencia", method = RequestMethod.POST)
 	public ResponseEntity<?> grabarAsistencia(@RequestHeader(value = "Authorization") String Authorization,
@@ -222,82 +242,187 @@ public class ScoutController {
 		scoutService.grabarAsistencia(asistencia);
 		return ResponseEntity.ok().build();
 	}
+
+	//***************************PARA NOTICIAS**************************************/////	
+	// servicio que devuelve el objeto noticias
+	@RequestMapping(value = "/recuperarNoticiaId/{idNoticia}", method = RequestMethod.GET)
+	public ResponseEntity<?> recuperarNoticiaId(@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable("idNoticia") Integer idNoticia) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Noticia _noticia;
+		if (noticiaRepository.findById(idNoticia).isPresent()) {
+			_noticia = noticiaRepository.findById(idNoticia).get();
+			return ResponseEntity.ok(_noticia);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	
+	// servicio para grabar Documento
+	@RequestMapping(value="/grabarNoticia", method=RequestMethod.POST)
+	public ResponseEntity<?> grabarNoticia(@RequestHeader(value="Authorization") String Authorization, 
+			@RequestBody Noticia noticia) {
+		if (!securityService.isTokenValido(Authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Noticia _noticia = new Noticia();
+		if (noticia.getId() != null) {
+			_noticia = noticiaRepository.findById(noticia.getId()).get();
+		}
+		BeanUtils.copyProperties(noticia, _noticia);
+		noticiaRepository.save(_noticia);
+		return ResponseEntity.ok(_noticia);
+	}
+
+	//lista las noticias
+	@RequestMapping(value = "/listadoNoticias", method = RequestMethod.GET)
+	public ResponseEntity<?> listadoNoticias(@RequestHeader(value = "Authorization") String authorization) {
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		return ResponseEntity.ok(noticiaRepository.listadoNoticias());
+	}
+	//***************************PARA REPORTES**************************************/////7
+
+
+	//***************************PARA REPORTES**************************************/////
 	
-//***************************PARA PANTALLA ASISTENCIA**************************************/////
-//
-//	private static final String PATH_REPORT = File.separator+"src"+File.separator+"main"+File.separator+"resources"+File.separator+"rep";
-//
-//	//reporte agenda
-//	@RequestMapping(value="/getAgendaMedico/{idMedico}/{pi_fecha_inicio}/{pi_fecha_fin}", method=RequestMethod.GET)
-//	public ResponseEntity<?> getAgendaMedico(@RequestHeader(value="Authorization") String authorization,
-//
-//			@PathVariable("idMedico") Integer idMedico, 
-//			@PathVariable("pi_fecha_inicio") String pi_fecha_inicio, 
-//			@PathVariable("pi_fecha_fin") String pi_fecha_fin,
-//			HttpServletRequest request) throws Exception {
-//
-//		if (!securityService.isTokenValido(authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		Map<String, Object> parametros = new HashMap<String, Object>();
-//		parametros.put("pi_id_medico", idMedico);
-//		parametros.put("pi_fecha_inicio", pi_fecha_inicio);
-//		parametros.put("pi_fecha_fin", pi_fecha_fin);
-//
-//		Resource resource = reportService.generaReporteParametros("rpt_agenda_medico.jasper",parametros);
-//
-//		// Determina el contenido
-//		String contentType = null;
-//		try {
-//			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-//		} catch (IOException ex) {
-//			ex.printStackTrace();
-//		}
-//
-//		// Si no se determina el tipo, asjjume uno por defecto.
-//		if(contentType == null) {
-//			contentType = "application/octet-stream";
-//		}
-//
-//		return ResponseEntity.ok()
-//				.contentType(MediaType.parseMediaType(contentType))
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//				.body(resource);
-//	}
-//
-//	//reporte historial
-//	@RequestMapping(value="/getHistorialPaciente/{pi_id_paciente}", method=RequestMethod.GET)
-//	public ResponseEntity<?> getHistorialPaciente(@RequestHeader(value="Authorization") String authorization,
-//
-//			@PathVariable("pi_id_paciente") Integer pi_id_paciente, 
-//			HttpServletRequest request) throws Exception {
-//
-//		if (!securityService.isTokenValido(authorization)) {
-//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//		}
-//		Map<String, Object> parametros = new HashMap<String, Object>();
-//		parametros.put("pi_id_paciente", pi_id_paciente);
-//		Resource resource = reportService.generaReporteParametros("rpt_historial_medico.jasper",parametros);
-//
-//		// Determina el contenido
-//		String contentType = null;
-//		try {
-//			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-//		} catch (IOException ex) {
-//			ex.printStackTrace();
-//		}
-//
-//		// Si no se determina el tipo, asjjume uno por defecto.
-//		if(contentType == null) {
-//			contentType = "application/octet-stream";
-//		}
-//
-//		return ResponseEntity.ok()
-//				.contentType(MediaType.parseMediaType(contentType))
-//				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//				.body(resource);
-//	}
-//
-//	//****************** SERVICIOS PARA MEDICOS************************//
+	@RequestMapping(value="/getRankings", method=RequestMethod.GET)
+	public ResponseEntity<?> getRankings(@RequestHeader(value="Authorization") String authorization,
+//			@PathVariable("pi_id_insignia") Integer pi_id_insignia, 
+			HttpServletRequest request) throws Exception {
+
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Map<String, Object> parametros = new HashMap<String, Object>();
+//		parametros.put("pi_id_insignia", pi_id_insignia);
+
+		// Carga el archivo
+		File file =new File(imagen);
+		String ruta =file.getAbsoluteFile().getParent();
+		rutaImagen  = ruta+PATH_IMAGEN+File.separator+imagen; 
+		parametros.put("rutaImagen", rutaImagen);
+
+		File fileLogo =new File(imagenLogo);
+		String rutaLogo =fileLogo.getAbsoluteFile().getParent();
+		rutaImagenLogo  = rutaLogo+PATH_IMAGEN+File.separator+imagenLogo; 
+		parametros.put("rutaLogo", rutaImagenLogo);
+
+
+		// Determina el contenido
+		Resource resource = reportService.generaReporteParametros("rpt_ranking_insignias.jasper",parametros);
+
+		// Determina el contenido
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		// Si no se determina el tipo, asjjume uno por defecto.
+		if(contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
+	@RequestMapping(value="/getListadoAsistencia/{pi_id_asistencia}", method=RequestMethod.GET)
+	public ResponseEntity<?> getListadoAsistencia(@RequestHeader(value="Authorization") String authorization,
+			@PathVariable("pi_id_asistencia") Integer pi_id_asistencia, 
+			HttpServletRequest request) throws Exception {
+
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("pi_id_asistencia", pi_id_asistencia);
+
+		// Carga el archivo
+		File file =new File(imagen);
+		String ruta =file.getAbsoluteFile().getParent();
+		rutaImagen  = ruta+PATH_IMAGEN+File.separator+imagen; 
+		parametros.put("rutaImagen", rutaImagen);
+
+		File fileLogo =new File(imagenLogo);
+		String rutaLogo =fileLogo.getAbsoluteFile().getParent();
+		rutaImagenLogo  = rutaLogo+PATH_IMAGEN+File.separator+imagenLogo; 
+		parametros.put("rutaLogo", rutaImagenLogo);
+
+
+		// Determina el contenido
+		Resource resource = reportService.generaReporteParametros("rpt_asistencia.jasper",parametros);
+
+		// Determina el contenido
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		// Si no se determina el tipo, asjjume uno por defecto.
+		if(contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+
+	@RequestMapping(value="/getListadoProyectos/{pi_id_insignia}", method=RequestMethod.GET)
+	public ResponseEntity<?> getListadoProyectos(@RequestHeader(value="Authorization") String authorization,
+			@PathVariable("pi_id_insignia") Integer pi_id_insignia, 
+			HttpServletRequest request) throws Exception {
+
+		if (!securityService.isTokenValido(authorization)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("pi_id_insignia", pi_id_insignia);
+
+		// Carga el archivo
+		File file =new File(imagen);
+		String ruta =file.getAbsoluteFile().getParent();
+		rutaImagen  = ruta+PATH_IMAGEN+File.separator+imagen; 
+		parametros.put("rutaImagen", rutaImagen);
+
+		File fileLogo =new File(imagenLogo);
+		String rutaLogo =fileLogo.getAbsoluteFile().getParent();
+		rutaImagenLogo  = rutaLogo+PATH_IMAGEN+File.separator+imagenLogo; 
+		parametros.put("rutaLogo", rutaImagenLogo);
+
+
+		// Determina el contenido
+		Resource resource = reportService.generaReporteParametros("rpt_lista_actividades.jasper",parametros);
+
+		// Determina el contenido
+		String contentType = null;
+		try {
+			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		// Si no se determina el tipo, asjjume uno por defecto.
+		if(contentType == null) {
+			contentType = "application/octet-stream";
+		}
+
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(contentType))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+
+	//	//****************** SERVICIOS PARA MEDICOS************************//
 }

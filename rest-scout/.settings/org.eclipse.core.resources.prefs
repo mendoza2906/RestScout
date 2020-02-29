@@ -1,7 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
-encoding//src/main/resources/rep/detalleConsulta.jrxml=UTF-8
-encoding//src/main/resources/rep/rpt_agenda_medico.jrxml=UTF-8
-encoding//src/main/resources/rep/rpt_historial_medico.jrxml=UTF-8
+encoding//src/main/resources/rep/rpt_asistencia.jrxml=UTF-8
+encoding//src/main/resources/rep/rpt_lista_actividades.jrxml=UTF-8
+encoding//src/main/resources/rep/rpt_listado_proyectos2.jrxml=UTF-8
+encoding//src/main/resources/rep/rpt_ranking_insignias.jrxml=UTF-8
 encoding/<project>=UTF-8

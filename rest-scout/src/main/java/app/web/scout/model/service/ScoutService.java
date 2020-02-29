@@ -40,46 +40,6 @@ public class ScoutService {
 	@PersistenceContext
 	private EntityManager em;
 
-	//refresca la funcion fn_listar_docentes_asignaturas
-//	public List<CustObjCitasProc> refreshFnListarCitas(Integer id_estudiante_oferta,String fechaCita) {
-//		em.getEntityManagerFactory().getCache().evict(Cita.class);
-//		em.getEntityManagerFactory().getCache().evict(Medico.class);
-//		em.getEntityManagerFactory().getCache().evict(Paciente.class);
-//		em.getEntityManagerFactory().getCache().evict(Hora.class);
-//		List<CustObjCitasProc> listarCitasMedicos = citaRepository.fnListarCitas(id_estudiante_oferta, fechaCita);
-//		if(listarCitasMedicos != null) {
-//			return listarCitasMedicos;
-//		}
-//
-//		return listarCitasMedicos;
-//	}
-
-	//Graba las consultas a partir de una cita
-//	public void grabarConsultas(Consulta consulta) {
-//
-//		Long idConsulta=consulta.getId();
-//
-//		if(idConsulta==null) {
-//			Consulta _consulta = new Consulta();			
-//			BeanUtils.copyProperties(consulta, _consulta, "detallesConsulta");
-//			idConsulta  = consultaRepository.saveAndFlush(_consulta).getId();
-//		}
-//		for (int i = 0; i < consulta.getDetallesConsulta().size(); i++) {
-//			consulta.getDetallesConsulta().get(i).setIdConsulta(idConsulta);
-//		}
-//
-//		Consulta _consultaV1= new Consulta();
-//		_consultaV1 = consultaRepository.findById(idConsulta).get();
-//		Integer version = _consultaV1.getVersion();
-//		consulta.setId(idConsulta);
-//		consulta.setVersion(version);
-//		consultaRepository.save(consulta);
-//
-//		em.getEntityManagerFactory().getCache().evict(Consulta.class);
-//		em.getEntityManagerFactory().getCache().evict(DetalleConsulta.class);
-//
-//	}
-	
 //	Graba la asistencia y el detalle de la asistencia
 	public void grabarAsistencia(Asistencia asistencia) {
 		Integer idAsistencia=asistencia.getId();
@@ -130,7 +90,6 @@ public class ScoutService {
 		documento.setVersion(version);
 		documentoRepository.save(documento);
 	 	
-
 		em.getEntityManagerFactory().getCache().evict(ScoutModulo.class);
 		em.getEntityManagerFactory().getCache().evict(Documento.class);
 
@@ -171,21 +130,24 @@ public class ScoutService {
 		em.getEntityManagerFactory().getCache().evict(Usuario.class);
 	}
 	
-//	public void borraTipoReglamento(Integer idTipoReglamento) {
-//		TipoReglamento tipoReglamento = tipoReglamentoRepository.findById(idTipoReglamento).get();
-//		if (tipoReglamento !=null) {
-//			tipoReglamento.setEstado("I");
-//			tipoReglamentoRepository.save(tipoReglamento);
-//		}
-//	}
-//
-//	public void borraTipoEstudiante(Integer idTipoEstudiante) {
-//		TipoEstudiante tipoEstudiante = tipoEstudianteRepository.findById(idTipoEstudiante).get();
-//		if (tipoEstudiante !=null) {
-//			tipoEstudiante.setEstado("I");
-//			tipoEstudianteRepository.save(tipoEstudiante);
-//		}
-//	}
+	public void borraScout(Integer idScout) {
+		Scout scout = scoutRepository.findById(idScout).get();
+		if (scout !=null) {
+			scout.setEstado("I");
+			scout.getUsuario().setEstado("I");
+			scoutRepository.save(scout);
+		}
+	}
+
+	public void borraComisionado(Integer idScout) {
+		Scout scout = scoutRepository.findById(idScout).get();
+		if (scout !=null) {
+			scout.setEstado("I");
+			scout.getUsuario().setEstado("I");
+			scout.getComisionado().setEstado("I");
+			scoutRepository.save(scout);
+		}
+	}
 	
 	//Funcion para borrar por completo a estudiante
 //	public void borrarEstudiante(Integer idPersona) {

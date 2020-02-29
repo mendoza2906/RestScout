@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_listado_proyectos2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ef7a740-a1ca-4409-a61c-e64967603cb5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="pi_id_modulo" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[{call listado_proyectos2(  $P{pi_id_modulo}  )}]]>
+	</queryString>
+	<field name="id_scout" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_scout"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="scout"/>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+	</field>
+	<field name="identificacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="identificacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="scout"/>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipo_scout"/>
+	</field>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="0" width="222" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="5bd6823d-0bc7-4e21-bb8a-b42740c512c5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="16" y="0" width="144" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="634e00e2-1ce0-4c45-9c9e-fb63291d88cb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cf5150e2-82c6-4b43-a05a-5878e9b1100b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="382" y="0" width="114" height="15" forecolor="#FFFFFF" backcolor="#888888" uuid="472b7700-22b1-4726-96a5-9cf9afea4317">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f7be6ad-36eb-4efd-848a-a928e174b98d"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Scout]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="16" y="0" width="144" height="20" uuid="ed845c74-2f29-47ec-9313-a53680cdf3f3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29e60aa6-5949-4358-8dd8-14127783331e"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="0" width="222" height="20" uuid="3978f89e-ef58-4c17-97f8-9360271ea4a2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f1cb6504-2e9c-4970-aab5-2225bad56a14"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="0" width="114" height="20" uuid="8566b4ed-b87d-47a3-a693-4a3c5820ba24">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="881967f3-8a0a-499e-a14a-9a1e72768099"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
